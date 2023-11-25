@@ -9,8 +9,9 @@ turtle.tracer(0)
 turtle.title("chess")
 turtle.screensize(tile_size * 8, tile_size * 8, "#000000")
 
+
 def draw_board():
-    turtle.setpos(-(tile_size + 1) * 8 // 2, (tile_size + 1) * 8 // 2)
+    turtle.setpos(0, 0)
 
     for row in range(8):
         for tile in range(8):
@@ -29,5 +30,6 @@ def draw_board():
         turtle.pendown()
 
     turtle.done()
+
 
 draw_board()
