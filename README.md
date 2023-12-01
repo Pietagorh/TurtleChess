@@ -1,3 +1,3 @@
 # TurtleChess
 
-A little chess project made with turtle.
+A small chess project made with turtle.
