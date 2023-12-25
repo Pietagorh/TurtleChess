@@ -1,12 +1,13 @@
 import turtle as t
-from main import tile_size
+from config import tile_size
 from pieces.Piece import Piece
 
 
 class Rook(Piece):
     def draw(self):
-        t.goto(self.x * tile_size, self.y * tile_size)
+        t.color(self.color)
         t.penup()
+        self.go_to()
         t.left(90)
         t.forward(1 * 2)
         t.right(90)

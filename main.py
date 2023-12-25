@@ -1,6 +1,8 @@
 import turtle
 from config import tile_size
 from Board import Board
+from pieces.Rook import Rook
+from pieces.Pawn import Pawn
 
 
 def setup_turtle():
@@ -15,4 +17,6 @@ def setup_turtle():
 
 setup_turtle()
 Board.draw_background()
+Pawn(0, 0, "#ff0000").draw()
+Rook(1, 0, "#ff0000").draw()
 turtle.mainloop()

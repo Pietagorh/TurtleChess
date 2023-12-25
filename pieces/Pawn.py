@@ -5,6 +5,7 @@ from pieces.Piece import Piece
 
 class Pawn(Piece):
     def draw(self):
+        turtle.color(color)
         distance = (tile_size * 2 - 1) / 2
 
         turtle.pendown()
