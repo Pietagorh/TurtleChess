@@ -1,11 +1,13 @@
 import turtle
 from config import tile_size, board_origin
-
+from bitarray import bitarray
+from pieces.Pawn import Pawn
+from pieces.Rook import Rook
 
 class Board:
-
     def __init__(self):
-        pass  # todo
+        self.pieces = tuple()
+
 
     @staticmethod
     def draw_tile(x: int, y: int):
@@ -29,4 +31,8 @@ class Board:
         for row in range(8):
             for tile in range(8):
                 Board.draw_tile(row, tile)
-
+    
+    def convert_from_bitarray(position: bitarray):
+        pieces = [Pawn, Rook]
+        for i in range(0, 64, 4):
+            self.pieces.add(int(position[i: i + 1]), pieces[int(position[i + 1: i + 4])])
