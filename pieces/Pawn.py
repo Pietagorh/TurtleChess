@@ -4,20 +4,12 @@ from pieces.Piece import Piece
 
 
 class Pawn(Piece):
-    def draw(self):
-        turtle.color(color)
-        distance = (tile_size * 2 - 1) / 2
-
+    def draw(self): # tout pété mais c'est reconnaissable
+        self.go_to()
+        turtle.color(self.color)
+        distance = (tile_size - 1) / 2
+        turtle.forward(distance // 2)
         turtle.pendown()
-        turtle.back(distance / 2)
-        for _ in range(4):
-            turtle.forward(distance + 1)
-            turtle.right(90)
-        turtle.forward((distance / 2))
-
-        turtle.back(distance / 4)
-        for _ in range(4):
-            turtle.forward(distance / 2 + 1)
-            turtle.left(90)
-        turtle.penup()
-        turtle.update()
+        turtle.begin_fill()
+        turtle.circle(distance / 2)
+        turtle.end_fill()
