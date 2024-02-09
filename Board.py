@@ -1,6 +1,7 @@
 import turtle
 from config import tile_size, board_origin
 from bitarray import bitarray
+from bitarray.util import ba2int
 from pieces.Pawn import Pawn
 from pieces.Rook import Rook
 
@@ -32,7 +33,16 @@ class Board:
             for tile in range(8):
                 Board.draw_tile(row, tile)
     
-    def convert_from_bitarray(position: bitarray):
+    def convert_from_bitarray(self, position: bitarray):
         pieces = [Pawn, Rook]
         for i in range(0, 64, 4):
-            self.pieces.add(int(position[i: i + 1]), pieces[int(position[i + 1: i + 4])])
+
+            piece_type = ba2int(position[i + 1: i + 4])
+            if (piece_type) != 0:
+                piece = pieces[piece_type - 1]
+
+                x, y = divmod(i , 8)
+                is_white = bool(ba2int(position[i: i + 1]))
+
+                self.pieces += (piece(x, y, is_white),)
+        print(self.pieces)
