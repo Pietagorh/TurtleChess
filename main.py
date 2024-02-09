@@ -1,8 +1,7 @@
 import turtle
 from config import tile_size
 from Board import Board
-from pieces.Rook import Rook
-from pieces.Pawn import Pawn
+from bitarray import bitarray
 
 
 def setup_turtle():
@@ -15,7 +14,8 @@ def setup_turtle():
     turtle.setup((tile_size + 1) * 8 + 10, (tile_size + 1) * 8 + 10, 0, 0)
 
 setup_turtle()
-board = Board.draw_background()
-board.convert_from_bitarray(bitarray())
+board = Board()
+board.draw_background()
+board.convert_from_bitarray(bitarray("1001001000000000000000000000000000000000000000000000000000000000"))
 
 turtle.mainloop()
