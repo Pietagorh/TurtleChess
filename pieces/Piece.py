@@ -7,7 +7,7 @@ class Piece:
     def __init__(self, x, y, is_white: bool):
         self.x = x
         self.y = y
-        self.color = "#ffffff" if is_white else "#000000" 
+        self.is_white = is_white
 
     def go_to(self):
         t.penup()
@@ -18,3 +18,6 @@ class Piece:
     @abstractmethod
     def draw(self):
         pass
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__} {'blanc' if self.is_white else 'noir'} at ({self.x}, {self.y})"
