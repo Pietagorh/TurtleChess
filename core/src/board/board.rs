@@ -1,5 +1,3 @@
-use std::vec;
-
 static EDGE_SIZE: i32 = 8;
 
 pub(crate) struct Board{

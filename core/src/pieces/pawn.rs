@@ -11,18 +11,18 @@ impl Piece for Pawn{
     fn binary_image() -> u8 {
         1
     }
-    fn get_x(&self) -> u8 {
-        self.x
+    fn get_x(&self) -> &u8 {
+        &self.x
     }
-    fn get_y(&self) -> u8 {
-        self.y
+    fn get_y(&self) -> &u8 {
+        &self.y
     }
-    fn get_color(&self) -> Color {
-        self.color
+    fn get_color(&self) -> &Color {
+        &self.color
     }
     fn can_reach(&self, board: Board, x: u8, y: u8) -> bool{
         let direction: i8;
-        if self.color == Color:WHITE{
+        if self.color == Color::WHITE{
             direction = 1;
         }else{
             direction = -1;
@@ -39,6 +39,6 @@ impl Piece for Pawn{
     }
 
     fn move_to(&self, board: Board, x: u8, y: u8){
-
+        //TODO
     }
 }

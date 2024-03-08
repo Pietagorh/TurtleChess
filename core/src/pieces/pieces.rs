@@ -51,7 +51,7 @@ fn retrieve_piece_from_int(p: u8) -> Box<dyn Piece> {
     //TODO
 }
 
-pub(crate) fn retrieve_color_from_int(i: u8) -> Color{
+pub fn retrieve_color_from_int(i: u8) -> Color{
     if i << 3 == 0{
         Color::WHITE
     }else{
