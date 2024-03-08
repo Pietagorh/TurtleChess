@@ -1,11 +1,9 @@
 use std::vec;
 
-pub mod board;
-
 static EDGE_SIZE: i32 = 8;
 
-struct Board{
-    cases: [u8; 64]
+pub(crate) struct Board{
+    cases: Vec<u8>
 }
 
 impl Board{
