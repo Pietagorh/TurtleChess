@@ -32,7 +32,7 @@ impl Piece for Pawn{
         &self.color
     }
 
-    fn can_reach(&self, board: Board, x: u8, y: u8) -> bool{
+    fn can_reach(&self, board: &Board, x: u8, y: u8) -> bool{
         let direction: i8;
         if self.color == Color::WHITE{
             direction = 1;
@@ -43,7 +43,8 @@ impl Piece for Pawn{
             true
         }
         if ((x == self.x + 1) | (x == self.x - 1)) & (y == self.y + direction)
-            & (retrieve_color_from_int(board.get(x, y)) != self.color){
+            & (board.get(x, y) != 0)
+            & (retrieve_color_from_int(board.get(x, y)) != self.color) {
             true
         }
         //TODO gérer la position initiale pour le déplacement de 2

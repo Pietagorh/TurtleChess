@@ -1,6 +1,6 @@
 static EDGE_SIZE: i8 = 8;
 
-pub(crate) struct Board{
+pub struct Board{
     cases: Vec<u8>
 }
 

@@ -1,5 +1,5 @@
 use crate::board::board::Board;
-use crate::pieces::pieces::{Castleable, Color, Piece};
+use crate::pieces::pieces::{Castleable, Color, ColumnWalker, Piece, retrieve_color_from_int};
 
 struct Rook{
     x: u8,
@@ -8,8 +8,10 @@ struct Rook{
     has_moved: bool
 }
 
+impl ColumnWalker for Rook {}
+
 impl Castleable for Rook{
-    fn can_castle(&self, board: Board, knight_x: u8) -> bool{
+    fn can_castle(&self, board: &Board, knight_x: u8) -> bool{
         if !self.has_moved {
             let difference = (knight_x - self.x).abs();
             let direction = (knight_x - self.x) / difference;
@@ -23,7 +25,7 @@ impl Castleable for Rook{
         false
     }
 
-    fn castle(&mut self, board: Board, respective_piece_x: u8) {
+    fn castle(&mut self, board: &Board, respective_piece_x: u8) {
         let difference = (respective_piece_x - self.x);
         let direction = difference / difference.abs();
         self.move_to(board, respective_piece_x - direction, self.y);
@@ -55,28 +57,8 @@ impl Piece for Rook{
         &self.color
     }
 
-    fn can_reach(&self, board: Board, x: u8, y: u8) -> bool {
-        if x == self.x {
-            let difference = (y - self.y).abs();
-            let direction = (y - self.y) / difference;
-            for i in 1 ..= difference {
-                if(board.get(x, self.y + i * direction) != 0) {
-                    false
-                }
-            }
-            true
-        }
-        if y == self.y {
-            let difference = (x - self.x).abs();
-            let direction = (x - self.x) / difference;
-            for i in 1 ..= difference {
-                if(board.get(self.x + i * direction, y) != 0) {
-                    false
-                }
-            }
-            true
-        }
-        false
+    fn can_reach(&self, board: &Board, x: u8, y: u8) -> bool {
+        self.can_reach_on_column(board, x, y)
     }
 
     fn move_to(&mut self, board: Board, x: u8, y: u8) {

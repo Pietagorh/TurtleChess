@@ -1,15 +1,16 @@
 use crate::board::board::Board;
-use crate::pieces::pieces::{Color, Piece, retrieve_color_from_int};
+use crate::pieces::pieces::{Color, DiagWalker, Piece, retrieve_color_from_int};
 
-struct Knight{
+struct Bishop{
     x: u8,
     y: u8,
     color: Color
 }
 
-impl Piece for Knight{
+impl DiagWalker for Bishop {}
+impl Piece for Bishop {
     fn binary_image() -> u8 {
-        3
+        4
     }
 
     fn get_x(&self) -> &u8 {
@@ -21,7 +22,7 @@ impl Piece for Knight{
     }
 
     fn set_x(&mut self, x: u8) {
-        self.x = x;
+        self.x = x
     }
 
     fn set_y(&mut self, y: u8) {
@@ -33,11 +34,6 @@ impl Piece for Knight{
     }
 
     fn can_reach(&self, board: &Board, x: u8, y: u8) -> bool {
-        if ((((x - self.x).abs() == 2) & ((y - self.y).abs() == 1))
-            | (((x - self.x).abs() == 1) & ((y - self.y).abs() == 2)))
-            & ((board.get(x, y) == 0) | (retrieve_color_from_int(board.get(x, y)) != self.color)){
-            true
-        }
-        false
+        self.can_reach_on_diag(board, x, y)
     }
 }

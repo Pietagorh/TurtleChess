@@ -1,4 +1,6 @@
 pub mod pawn;
 pub mod pieces;
-mod rook;
-mod knight;
+pub mod rook;
+pub mod knight;
+pub mod bishop;
+pub mod queen;
