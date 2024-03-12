@@ -77,13 +77,6 @@ pub trait ColumnWalker: Piece {
     }
 }
 
-struct King{
-    x: u8,
-    y: u8,
-    color: Color,
-    has_moved: bool
-}
-
 fn retrieve_piece_from_int(p: u8) -> Box<dyn Piece> {
     let color= retrieve_color_from_int(p);
     //TODO
