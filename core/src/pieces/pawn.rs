@@ -1,13 +1,21 @@
 use crate::board::board::Board;
 use crate::pieces::pieces::{Color, Piece, retrieve_color_from_int};
 
-struct Pawn{
+pub struct Pawn{
     x: u8,
     y: u8,
     color: Color
 }
 
 impl Piece for Pawn{
+    fn new(x: u8, y: u8, color: Color) -> Self {
+        Pawn {
+            x,
+            y,
+            color,
+        }
+    }
+
     fn binary_image() -> u8 {
         1
     }
@@ -39,13 +47,13 @@ impl Piece for Pawn{
         }else{
             direction = -1;
         }
-        if (x == self.x) & (y == self.y + direction) & (board.get(x, y) == 0){
-            true
+        if (x == self.x) & (y == (self.y as i8 + direction) as u8) & (board.get(x, y) == 0){
+            return true;
         }
-        if ((x == self.x + 1) | (x == self.x - 1)) & (y == self.y + direction)
+        if ((x == self.x + 1) | (x == self.x - 1)) & (y == (self.y as i8 + direction) as u8)
             & (board.get(x, y) != 0)
             & (retrieve_color_from_int(board.get(x, y)) != self.color) {
-            true
+            return true;
         }
         //TODO gérer la position initiale pour le déplacement de 2
         false

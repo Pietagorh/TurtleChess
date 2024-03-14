@@ -1,4 +1,4 @@
-static EDGE_SIZE: i8 = 8;
+static EDGE_SIZE: u8 = 8;
 
 pub struct Board{
     cases: Vec<u8>
@@ -6,7 +6,7 @@ pub struct Board{
 
 impl Board{
     pub fn new() -> Board{
-        let cases: Vec<u8> = Vec::new();
+        let mut cases: Vec<u8> = Vec::new();
         for i in 0..64{
             cases[i] = 0;
         }
@@ -16,6 +16,10 @@ impl Board{
     }
 
     pub fn get(&self, x: u8, y: u8) -> u8{
-        self.cases[y * EDGE_SIZE + x]
+        self.cases[(y * EDGE_SIZE + x) as usize]
+    }
+
+    pub fn move_piece(&self, x_from: &u8, y_from: &u8, x_to: u8, y_to: u8){
+        //TODO
     }
 }

@@ -1,7 +1,7 @@
 use crate::board::board::Board;
 use crate::pieces::pieces::{Castleable, Color, ColumnWalker, DiagWalker, Piece};
 
-struct King{
+pub struct King{
     x: u8,
     y: u8,
     color: Color,
@@ -17,12 +17,25 @@ impl Castleable for King {
         todo!()
     }
 
-    fn castle(&self, board: &Board, respective_piece_x: u8) {
+    fn castle(&mut self, board: &Board, respective_piece_x: u8) {
         todo!()
+    }
+
+    fn set_has_moved(&mut self, has_moved: bool) {
+        self.has_moved = has_moved;
     }
 }
 
 impl Piece for King {
+    fn new(x: u8, y: u8, color: Color) -> Self {
+        King {
+            x,
+            y,
+            color,
+            has_moved: false,
+        }
+    }
+
     fn binary_image() -> u8 {
         6
     }
@@ -48,14 +61,14 @@ impl Piece for King {
     }
 
     fn can_reach(&self, board: &Board, x: u8, y: u8) -> bool {
-        let x_difference = (x - self.x).abs();
-        let y_difference = (y - self.y).abs();
+        let x_difference = ((x - self.x) as i8).abs();
+        let y_difference = ((y - self.y) as i8).abs();
         if !((x_difference < 2) & (y_difference < 2)) {
-            false
+            return false;
         }
         if !(self.can_reach_on_diag(board, x, y) | self.can_reach_on_column(board, x, y)){
             //TODO check if it's castle move
-            false
+            return false;
         }
         true
     }

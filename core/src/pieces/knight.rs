@@ -1,13 +1,21 @@
 use crate::board::board::Board;
 use crate::pieces::pieces::{Color, Piece, retrieve_color_from_int};
 
-struct Knight{
+pub struct Knight{
     x: u8,
     y: u8,
     color: Color
 }
 
 impl Piece for Knight{
+    fn new(x: u8, y: u8, color: Color) -> Self {
+        Knight {
+            x,
+            y,
+            color,
+        }
+    }
+
     fn binary_image() -> u8 {
         3
     }
@@ -33,10 +41,10 @@ impl Piece for Knight{
     }
 
     fn can_reach(&self, board: &Board, x: u8, y: u8) -> bool {
-        if ((((x - self.x).abs() == 2) & ((y - self.y).abs() == 1))
-            | (((x - self.x).abs() == 1) & ((y - self.y).abs() == 2)))
+        if (((((x - self.x) as i8).abs() == 2) & (((y - self.y) as i8).abs() == 1))
+            | ((((x - self.x) as i8).abs() == 1) & (((y - self.y) as i8).abs() == 2)))
             & ((board.get(x, y) == 0) | (retrieve_color_from_int(board.get(x, y)) != self.color)){
-            true
+            return true;
         }
         false
     }

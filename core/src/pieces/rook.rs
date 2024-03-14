@@ -1,7 +1,7 @@
 use crate::board::board::Board;
-use crate::pieces::pieces::{Castleable, Color, ColumnWalker, Piece, retrieve_color_from_int};
+use crate::pieces::pieces::{Castleable, Color, ColumnWalker, Piece};
 
-struct Rook{
+pub struct Rook{
     x: u8,
     y: u8,
     color: Color,
@@ -13,26 +13,39 @@ impl ColumnWalker for Rook {}
 impl Castleable for Rook{
     fn can_castle(&self, board: &Board, knight_x: u8) -> bool{
         if !self.has_moved {
-            let difference = (knight_x - self.x).abs();
-            let direction = (knight_x - self.x) / difference;
+            let difference = ((knight_x - self.x) as i8).abs();
+            let direction = (knight_x - self.x) as i8 / difference;
             for i in 1 ..difference {
-                if board.get(self.x + i * direction, self.y) != 0{
-                    false
+                if board.get((self.x as i8 + i * direction) as u8, self.y) != 0{
+                    return false;
                 }
             }
-            true
+            return true;
         }
         false
     }
 
     fn castle(&mut self, board: &Board, respective_piece_x: u8) {
-        let difference = (respective_piece_x - self.x);
+        let difference: i8 = (respective_piece_x - self.x) as i8;
         let direction = difference / difference.abs();
-        self.move_to(board, respective_piece_x - direction, self.y);
+        Castleable::move_to(self, board, (respective_piece_x as i8 - direction) as u8, self.y);
+    }
+
+    fn set_has_moved(&mut self, has_moved: bool) {
+        self.has_moved = has_moved;
     }
 }
 
 impl Piece for Rook{
+    fn new(x: u8, y: u8, color: Color) -> Self {
+        Rook {
+            x,
+            y,
+            color,
+            has_moved: false,
+        }
+    }
+
     fn binary_image() -> u8 {
         2
     }
@@ -59,10 +72,5 @@ impl Piece for Rook{
 
     fn can_reach(&self, board: &Board, x: u8, y: u8) -> bool {
         self.can_reach_on_column(board, x, y)
-    }
-
-    fn move_to(&mut self, board: Board, x: u8, y: u8) {
-        super:self.move_to(board, x, y);
-        self.has_moved = true;
     }
 }

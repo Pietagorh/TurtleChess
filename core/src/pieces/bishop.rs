@@ -1,7 +1,7 @@
 use crate::board::board::Board;
-use crate::pieces::pieces::{Color, DiagWalker, Piece, retrieve_color_from_int};
+use crate::pieces::pieces::{Color, DiagWalker, Piece};
 
-struct Bishop{
+pub struct Bishop{
     x: u8,
     y: u8,
     color: Color
@@ -9,6 +9,14 @@ struct Bishop{
 
 impl DiagWalker for Bishop {}
 impl Piece for Bishop {
+    fn new(x: u8, y: u8, color: Color) -> Self {
+        Bishop {
+            x,
+            y,
+            color,
+        }
+    }
+
     fn binary_image() -> u8 {
         4
     }

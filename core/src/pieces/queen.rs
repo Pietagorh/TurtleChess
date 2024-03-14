@@ -1,7 +1,7 @@
 use crate::board::board::Board;
 use crate::pieces::pieces::{Color, ColumnWalker, DiagWalker, Piece};
 
-struct Queen{
+pub struct Queen{
     x: u8,
     y: u8,
     color: Color
@@ -12,6 +12,14 @@ impl ColumnWalker for Queen {}
 impl DiagWalker for Queen {}
 
 impl Piece for Queen {
+    fn new(x: u8, y: u8, color: Color) -> Self {
+        Queen {
+            x,
+            y,
+            color,
+        }
+    }
+
     fn binary_image() -> u8 {
         5
     }
