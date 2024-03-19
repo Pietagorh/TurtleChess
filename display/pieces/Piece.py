@@ -1,4 +1,3 @@
-from abc import abstractmethod
 import turtle as t
 from display.config import board_origin, tile_size
 
@@ -12,8 +11,8 @@ class Piece:
     def go_to(self):
         t.penup()
         t.setheading(0)
-        t.goto(board_origin + self.x * tile_size + tile_size / 2, board_origin + self.y * tile_size  + tile_size / 2)
-        #on place au milieu de la case
+        t.goto(board_origin + self.x * tile_size + tile_size / 2, board_origin + self.y * tile_size + tile_size / 2)
+        # on place au milieu de la case
 
     def draw(self):
         pass

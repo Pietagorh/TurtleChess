@@ -1,4 +1,3 @@
-import turtle as t
 from display.pieces.Piece import Piece
 
 
