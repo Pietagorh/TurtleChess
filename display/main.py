@@ -1,6 +1,6 @@
 import turtle
-from config import tile_size
-from Board import Board
+from display.config import tile_size
+from display.Board import Board
 from bitarray import bitarray
 
 
