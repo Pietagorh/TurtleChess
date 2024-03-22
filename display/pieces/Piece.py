@@ -1,5 +1,5 @@
 import turtle as t
-from config import tile_size
+from display.config import board_origin, tile_size
 
 
 class Piece:
@@ -19,7 +19,7 @@ class Piece:
     def draw(self):
         self.go_to()
         t.color("#ffffff" if self.is_white else "#0000000")
-        with open(f"pieces/imgs/{self.__class__.__name__}.bin", "br") as image:
+        with open(f"display/pieces/imgs/{self.__class__.__name__}.bin", "br") as image:
             for i in range(17 ** 2):
                 if i % 17 == 0:
                     self.go_to()
