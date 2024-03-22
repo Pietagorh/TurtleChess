@@ -1,5 +1,5 @@
 import turtle as t
-from display.config import board_origin, tile_size
+from config import board_origin, tile_size
 
 
 class Piece:
