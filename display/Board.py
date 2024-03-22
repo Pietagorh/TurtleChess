@@ -1,10 +1,10 @@
 import turtle
-from config import tile_size, board_origin
 from bitarray import bitarray
 from bitarray.util import ba2int
-from pieces.Pawn import Pawn
-from pieces.Rook import Rook
-from pieces.Piece import Piece
+from display.config import tile_size, board_origin
+from display.pieces.Pawn import Pawn
+from display.pieces.Piece import Piece
+from display.pieces.Rook import Rook
 
 class Board:
     def __init__(self):
