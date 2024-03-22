@@ -20,7 +20,6 @@ class Board:
         for _ in range(4):
             turtle.forward(tile_size)
             turtle.left(90)
-        turtle.forward(tile_size + 1)
         turtle.end_fill()
 
     @staticmethod
@@ -32,6 +31,10 @@ class Board:
         for row in range(8):
             for tile in range(8):
                 Board.draw_tile(row, tile)
+    
+    def draw_pieces(self):
+        for piece in self.pieces:
+            piece.draw()
     
     def convert_from_bitarray(self, position: bitarray):
         pieces = [Pawn, Rook]
