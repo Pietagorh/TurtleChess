@@ -1,4 +1,4 @@
-from display.pieces.Piece import Piece
+from pieces.Piece import Piece
 
 
 class Rook(Piece):
