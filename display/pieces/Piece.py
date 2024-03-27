@@ -1,5 +1,5 @@
 import turtle as t
-from config import board_origin, tile_size
+from config import board_origin, tile_size, piece_colors
 from utils import bits_from_file_end_first
 
 
@@ -18,7 +18,7 @@ class Piece:
 
     def draw(self):
         t.penup()
-        t.color("#ffffff" if self.is_white else "#000000")
+        t.color(piece_colors[0] if self.is_white else piece_colors[1])
 
         for i, pixel in enumerate(bits_from_file_end_first(f"pieces/imgs/{self.__class__.__name__}.bin")):
             if i % 17 == 0:  # place on the right line
