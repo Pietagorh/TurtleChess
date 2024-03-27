@@ -2,8 +2,12 @@ import turtle
 from bitarray import bitarray
 from bitarray.util import ba2int
 from config import tile_size, board_origin
+from pieces.Bishop import Bishop
+from pieces.King import King
+from pieces.Knight import Knight
 from pieces.Pawn import Pawn
 from pieces.Piece import Piece
+from pieces.Queen import Queen
 from pieces.Rook import Rook
 
 class Board:
@@ -37,15 +41,14 @@ class Board:
             piece.draw()
     
     def convert_from_bitarray(self, position: bitarray):
-        pieces = [Pawn, Rook]
-        for i in range(0, 64, 4):
+        pieces = [Pawn, Rook, Knight, Bishop, Queen, King]
+        for i in range(0, 32, 4):
 
             piece_type = ba2int(position[i + 1: i + 4])
-            if (piece_type) != 0:
+            if piece_type != 0:
                 piece = pieces[piece_type - 1]
 
-                x, y = divmod(i , 8)
+                y, x = divmod(i // 4, 8)
                 is_white = bool(ba2int(position[i: i + 1]))
 
                 self.pieces += (piece(x, y, is_white),)
-        print(self.pieces)

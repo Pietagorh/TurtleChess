@@ -17,6 +17,6 @@ def setup_turtle():
 setup_turtle()
 board = Board()
 board.draw_background()
-board.convert_from_bitarray(bitarray("1001001000000000000000000000000000000000000000000000000000000000"))
+board.convert_from_bitarray(bitarray("10101011110011011110110010111010"))
 board.draw_pieces()
 turtle.mainloop()
