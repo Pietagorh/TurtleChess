@@ -1,7 +1,8 @@
-def bits_from_file(file_path):
+def bits_from_file_end_first(file_path):
     with open(file_path, "br") as f:
-        bytes = f.read()
-    print(bytes)
-    for b in bytes:
-        for i in range(8):
-            yield (b >> i) & 1
+        bits = []
+        for _ in range(17 ** 2):
+            bits.append(f.read(1) == b'1')
+
+    for bit in reversed(bits):
+        yield bit
