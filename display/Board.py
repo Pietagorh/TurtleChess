@@ -12,15 +12,23 @@ from pieces.Rook import Rook
 
 
 class Board:
-    def __init__(self):
+    def __init__(self) -> None:
         self.pieces: list[Piece] = []
 
     @staticmethod
-    def draw_tile(x: int, y: int):
+    def draw_tile(x: int, y: int) -> None:
+        """
+        Draws one empty tile on the chess board.
+        :param x: the x position of the tile to draw
+        :param y: the y position of the tile to draw
+        """
+
         turtle.penup()
         turtle.goto(board_origin + x * tile_size, board_origin + y * tile_size)
         turtle.pendown()
+
         turtle.color(board_colors[0] if (x + y) % 2 == 0 else board_colors[1])
+
         turtle.begin_fill()
         for _ in range(4):
             turtle.forward(tile_size)
@@ -28,7 +36,10 @@ class Board:
         turtle.end_fill()
 
     @staticmethod
-    def draw_background():
+    def draw_background() -> None:
+        """
+        Draws all background tiles
+        """
         turtle.penup()
         turtle.setpos(board_origin, board_origin)
         turtle.pendown()
@@ -37,11 +48,18 @@ class Board:
             for tile in range(8):
                 Board.draw_tile(row, tile)
     
-    def draw_pieces(self):
+    def draw_pieces(self) -> None:
+        """
+        Draws all the pieces
+        """
         for piece in self.pieces:
             piece.draw()
-    
-    def convert_from_bitarray(self, position: bitarray):
+
+    def convert_from_bitarray(self, position: bitarray) -> None:
+        """
+        Converts from the bitarrays sent from core
+        :param position: a 256 bits long bitarray (see README)
+        """
         pieces = [Pawn, Rook, Knight, Bishop, Queen, King]
         for i in range(0, 64 * 4, 4):
 

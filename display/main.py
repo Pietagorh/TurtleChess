@@ -4,11 +4,14 @@ from Board import Board
 from bitarray import bitarray
 
 
-def setup_turtle():
+def setup_turtle() -> None:
+    """
+    Sets up the turtle module
+    """
     turtle.reset()
     turtle.speed(0)
-    turtle.hideturtle()
     turtle.tracer(0)
+    turtle.hideturtle()
     turtle.title("chess")
     turtle.screensize((tile_size + 1) * 8, (tile_size + 1) * 8, "#000000")
     turtle.setup((tile_size + 1) * 8 + 10, (tile_size + 1) * 8 + 10, 0, 0)
