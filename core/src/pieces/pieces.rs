@@ -4,7 +4,8 @@ use crate::pieces::pawn::Pawn;
 #[derive(PartialEq)]
 pub enum Color{
     WHITE,
-    BLACK
+    BLACK,
+    NONE
 }
 
 pub trait Piece {
@@ -16,7 +17,7 @@ pub trait Piece {
     fn set_y(&mut self, y: u8);
     fn get_color(&self) -> &Color;
     fn can_reach(&self, board: &Board, x: u8, y: u8) -> bool;
-    fn move_to(&mut self, board: &Board, x: u8, y: u8){
+    fn move_to(&mut self, board: &mut Board, x: u8, y: u8){
         if self.can_reach(board, x, y) {
             self.set_x(x);
             self.set_y(y);
@@ -27,9 +28,9 @@ pub trait Piece {
 
 pub trait Castleable: Piece {
     fn can_castle(&self, board: &Board, other_piece_x: u8) -> bool;
-    fn castle(&mut self, board: &Board, respective_piece_x: u8);
+    fn castle(&mut self, board: &mut Board, respective_piece_x: u8);
     fn set_has_moved(&mut self, has_moved: bool);
-    fn move_to(&mut self, board: &Board, x: u8, y: u8) {
+    fn move_to(&mut self, board: &mut Board, x: u8, y: u8) {
         if self.can_reach(board, x, y) {
             self.set_x(x);
             self.set_y(y);
@@ -49,12 +50,12 @@ pub trait DiagWalker: Piece {
         let x_direction = x_difference / x_difference.abs();
         let y_direction = y_difference / y_difference.abs();
         for i in 1..x_difference.abs() {
-            if board.get((*self.get_x() as i8 + x_direction * i) as u8, (*self.get_y() as i8 + y_direction * i) as u8) != 0{
+            if *board.get((*self.get_x() as i8 + x_direction * i) as u8, (*self.get_y() as i8 + y_direction * i) as u8) == 0{
                 return false;
             }
         }
         let piece = board.get(x, y);
-        if (piece != 0) & (retrieve_color_from_int(piece) != *self.get_color()) {
+        if (*piece != 0) & (*retrieve_piece_from_int(piece).get_color() != *self.get_color()) {
             return false;
         }
         true
@@ -68,7 +69,7 @@ pub trait ColumnWalker: Piece {
             let direction: i8 = (y - self.get_y()) as i8 / difference;
             for i in 1 ..= difference {
                 let piece = board.get(x, (*self.get_y() as i8 + i * direction) as u8);
-                if (piece != 0) & (retrieve_color_from_int(piece) != *self.get_color()) {
+                if (*piece != 0) & (*retrieve_piece_from_int(piece).get_color() != *self.get_color()) {
                     return false;
                 }
             }
@@ -79,7 +80,7 @@ pub trait ColumnWalker: Piece {
             let direction = (x - self.get_x()) as i8 / difference;
             for i in 1 ..= difference {
                 let piece = board.get((*self.get_x() as i8 + i * direction) as u8, y);
-                if (piece != 0) & (retrieve_color_from_int(piece) != *self.get_color()) {
+                if (*piece != 0) & (*retrieve_piece_from_int(piece).get_color() != *self.get_color()) {
                     return false;
                 }
             }
@@ -89,13 +90,13 @@ pub trait ColumnWalker: Piece {
     }
 }
 
-fn retrieve_piece_from_int(p: u8) -> Box<dyn Piece> {
+pub fn retrieve_piece_from_int(p: &u8) -> Box<dyn Piece> {
     let color= retrieve_color_from_int(p);
     //TODO
     return Box::new(Pawn::new(0, 0, Color::WHITE)); //temp
 }
 
-pub fn retrieve_color_from_int(i: u8) -> Color{
+pub fn retrieve_color_from_int(i: &u8) -> Color{
     if i << 3 == 0{
         Color::WHITE
     }else{

@@ -1,5 +1,5 @@
 use crate::board::board::Board;
-use crate::pieces::pieces::{Color, Piece, retrieve_color_from_int};
+use crate::pieces::pieces::{Color, Piece, retrieve_piece_from_int};
 
 pub struct Pawn{
     x: u8,
@@ -47,12 +47,13 @@ impl Piece for Pawn{
         }else{
             direction = -1;
         }
-        if (x == self.x) & (y == (self.y as i8 + direction) as u8) & (board.get(x, y) == 0){
+        if (x == self.x) & (y == (self.y as i8 + direction) as u8) & (*board.get(x, y) == 0){
             return true;
         }
+        let piece = board.get(x, y);
         if ((x == self.x + 1) | (x == self.x - 1)) & (y == (self.y as i8 + direction) as u8)
-            & (board.get(x, y) != 0)
-            & (retrieve_color_from_int(board.get(x, y)) != self.color) {
+            & (*piece != 0)
+            & (*retrieve_piece_from_int(piece).get_color() != self.color) {
             return true;
         }
         //TODO gérer la position initiale pour le déplacement de 2

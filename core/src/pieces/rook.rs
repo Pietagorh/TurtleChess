@@ -16,7 +16,7 @@ impl Castleable for Rook{
             let difference = ((knight_x - self.x) as i8).abs();
             let direction = (knight_x - self.x) as i8 / difference;
             for i in 1 ..difference {
-                if board.get((self.x as i8 + i * direction) as u8, self.y) != 0{
+                if *board.get((self.x as i8 + i * direction) as u8, self.y) == 0{
                     return false;
                 }
             }
@@ -25,7 +25,7 @@ impl Castleable for Rook{
         false
     }
 
-    fn castle(&mut self, board: &Board, respective_piece_x: u8) {
+    fn castle(&mut self, board: &mut Board, respective_piece_x: u8) {
         let difference: i8 = (respective_piece_x - self.x) as i8;
         let direction = difference / difference.abs();
         Castleable::move_to(self, board, (respective_piece_x as i8 - direction) as u8, self.y);

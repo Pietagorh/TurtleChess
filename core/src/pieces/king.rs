@@ -17,7 +17,7 @@ impl Castleable for King {
         todo!()
     }
 
-    fn castle(&mut self, board: &Board, respective_piece_x: u8) {
+    fn castle(&mut self, board: &mut Board, respective_piece_x: u8) {
         todo!()
     }
 
