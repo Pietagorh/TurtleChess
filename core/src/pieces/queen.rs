@@ -20,7 +20,7 @@ impl Piece for Queen {
         }
     }
 
-    fn binary_image() -> u8 {
+    fn binary_image(&self) -> u8 {
         5
     }
 

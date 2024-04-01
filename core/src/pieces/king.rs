@@ -36,7 +36,7 @@ impl Piece for King {
         }
     }
 
-    fn binary_image() -> u8 {
+    fn binary_image(&self) -> u8 {
         6
     }
 

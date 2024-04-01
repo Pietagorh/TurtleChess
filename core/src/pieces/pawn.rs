@@ -16,7 +16,7 @@ impl Piece for Pawn{
         }
     }
 
-    fn binary_image() -> u8 {
+    fn binary_image(&self) -> u8 {
         1
     }
 

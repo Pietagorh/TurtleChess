@@ -23,7 +23,7 @@ impl Board{
     }
 
     pub fn get(&self, x: u8, y: u8) -> &u8 {
-        &self.cases[(Board::get_index_from_coord(x, y)) as usize]
+        &self.cases[Board::get_index_from_coord(x, y)]
     }
 
     fn get_index_from_coord(x: u8, y: u8) -> usize {

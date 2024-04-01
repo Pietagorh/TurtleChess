@@ -1,5 +1,12 @@
 use crate::board::board::Board;
 use crate::pieces::pawn::Pawn;
+use std::collections::HashMap;
+use std::ops::Deref;
+use crate::pieces::bishop::Bishop;
+use crate::pieces::king::King;
+use crate::pieces::knight::Knight;
+use crate::pieces::queen::Queen;
+use crate::pieces::rook::Rook;
 
 #[derive(PartialEq)]
 pub enum Color{
@@ -8,9 +15,20 @@ pub enum Color{
     NONE
 }
 
+const BINARY_IMAGES: HashMap<u8, dyn FnOnce(u8, u8, Color) -> dyn Piece> = HashMap::from(
+    [
+        (1, |x, y, color| Pawn::new(x, y, color)),
+        (2, |x, y, color| Rook::new(x, y, color)),
+        (3, |x, y, color| Knight::new(x, y, color)),
+        (4, |x, y, color| Bishop::new(x, y, color)),
+        (5, |x, y, color| Queen::new(x, y, color)),
+        (6, |x, y, color| King::new(x, y, color))
+    ]
+);
+
 pub trait Piece {
     fn new(x: u8, y: u8, color: Color) -> Self where Self: Sized;
-    fn binary_image() -> u8 where Self: Sized;
+    fn binary_image(&self) -> u8 ;
     fn get_x(&self) -> &u8;
     fn get_y(&self) -> &u8;
     fn set_x(&mut self, x: u8);
@@ -55,7 +73,7 @@ pub trait DiagWalker: Piece {
             }
         }
         let piece = board.get(x, y);
-        if (*piece != 0) & (*retrieve_piece_from_int(piece).get_color() != *self.get_color()) {
+        if (*piece != 0) & (*retrieve_piece_from_int(piece, x, y).get_color() != *self.get_color()) {
             return false;
         }
         true
@@ -68,8 +86,9 @@ pub trait ColumnWalker: Piece {
             let difference = ((y - self.get_y()) as i8).abs();
             let direction: i8 = (y - self.get_y()) as i8 / difference;
             for i in 1 ..= difference {
-                let piece = board.get(x, (*self.get_y() as i8 + i * direction) as u8);
-                if (*piece != 0) & (*retrieve_piece_from_int(piece).get_color() != *self.get_color()) {
+                let y: u8 = (*self.get_y() as i8 + i * direction) as u8;
+                let piece = board.get(x, y);
+                if (*piece != 0) & (*retrieve_piece_from_int(piece, x, y).get_color() != *self.get_color()) {
                     return false;
                 }
             }
@@ -79,8 +98,9 @@ pub trait ColumnWalker: Piece {
             let difference = ((x - self.get_x()) as i8).abs();
             let direction = (x - self.get_x()) as i8 / difference;
             for i in 1 ..= difference {
-                let piece = board.get((*self.get_x() as i8 + i * direction) as u8, y);
-                if (*piece != 0) & (*retrieve_piece_from_int(piece).get_color() != *self.get_color()) {
+                let x: u8 = (*self.get_x() as i8 + i * direction) as u8;
+                let piece = board.get(x, y);
+                if (*piece != 0) & (*retrieve_piece_from_int(piece, x, y).get_color() != *self.get_color()) {
                     return false;
                 }
             }
@@ -90,14 +110,14 @@ pub trait ColumnWalker: Piece {
     }
 }
 
-pub fn retrieve_piece_from_int(p: &u8) -> Box<dyn Piece> {
+pub fn retrieve_piece_from_int(p: &u8, x: u8, y: u8) -> Box<dyn Piece> {
     let color= retrieve_color_from_int(p);
-    //TODO
-    return Box::new(Pawn::new(0, 0, Color::WHITE)); //temp
+    let binary_image = (p << 5) >> 5;
+    return Box::new(BINARY_IMAGES.get(binary_image).expect("Could not read a piece value")(x, y, color));
 }
 
 pub fn retrieve_color_from_int(i: &u8) -> Color{
-    if i << 3 == 0{
+    if i >> 3 == 0{
         Color::WHITE
     }else{
         Color::BLACK
