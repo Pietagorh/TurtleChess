@@ -4,14 +4,14 @@
 The board is encoded as 64 4-bits tiles, and 2 bytes of header info.
 
 ### Header
-| Attribute                     | Bits |
-|-------------------------------|------|
-| can white castle left         | 1    |
-| can white castle right        | 1    |
-| can black castle left         | 1    |
-| can black castle right        | 1    |
-| counter for the 50-moves rule | 7    |
-| empty                         | 5    |
+| Attribute               | Bits |
+|-------------------------|------|
+| white O-O               | 1    |
+| white O-O-O             | 1    |
+| black O-O               | 1    |
+| black O-O-O             | 1    |
+| counter (50-moves rule) | 7    |
+| unused                  | 5    |
 
 ### Tiles
 | Attribute  | Bits |
@@ -21,7 +21,7 @@ The board is encoded as 64 4-bits tiles, and 2 bytes of header info.
 
 ## Moves
 
-Each move can be encoded with 2 bytes. 
+Each move can be encoded with 2 bytes.
 
 | Attribute             | Bits |
 |-----------------------|------|
@@ -29,4 +29,4 @@ Each move can be encoded with 2 bytes.
 | to position index     | 6    |
 | is capture/check/mate | 2    |
 | empty                 | 2    |
-The from position index field is important for differentiating from duplicate moves (i.e. 2 rooks on the same file).
+*The `from position index` field is important for differentiating duplicate moves (i.e. 2 rooks on the same file).*
