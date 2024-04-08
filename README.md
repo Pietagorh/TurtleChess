@@ -11,7 +11,9 @@ The board is encoded as 64 4-bits tiles, and 2 bytes of header info.
 | black O-O               | 1    |
 | black O-O-O             | 1    |
 | counter (50-moves rule) | 7    |
-| unused                  | 5    |
+| can en passant          | 1    |
+| en passant column       | 3    |
+| white to move           | 1    |
 
 ### Tiles
 | Attribute  | Bits |
