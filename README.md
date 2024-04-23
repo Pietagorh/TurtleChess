@@ -1,19 +1,20 @@
 # Bit stuff
 ## Board
 
-The board is encoded as 64 4-bits tiles, and 2 bytes of header info.
+The board is encoded as 64 4-bits tiles (32 bytes), and 2 bytes of header info.
 
 ### Header
 | Attribute               | Bits |
 |-------------------------|------|
+| white to move           | 1    |
 | white O-O               | 1    |
 | white O-O-O             | 1    |
 | black O-O               | 1    |
 | black O-O-O             | 1    |
-| counter (50-moves rule) | 7    |
 | can en passant          | 1    |
 | en passant column       | 3    |
-| white to move           | 1    |
+| counter (50-moves rule) | 7    |
+*The counter needs to count up to 100 because it counts half-moves*
 
 ### Tiles
 | Attribute  | Bits |
