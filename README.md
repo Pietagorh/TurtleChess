@@ -26,10 +26,12 @@ The board is encoded as 64 4-bits tiles (32 bytes), and 2 bytes of header info.
 
 Each move can be encoded with 2 bytes.
 
-| Attribute             | Bits |
-|-----------------------|------|
-| from position index   | 6    |
-| to position index     | 6    |
-| is capture/check/mate | 2    |
-| empty                 | 2    |
+| Attribute           | Bits |
+|---------------------|------|
+| from position index | 6    |
+| to position index   | 6    |
+| is capture          | 1    |
+| is check            | 1    |
+| is mate             | 1    |
+| *empty*             | 1    |
 *The `from position index` field is important for differentiating duplicate moves (i.e. 2 rooks on the same file).*
