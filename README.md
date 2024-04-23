@@ -35,3 +35,7 @@ Each move can be encoded with 2 bytes.
 | is mate             | 1    |
 | *empty*             | 1    |
 *The `from position index` field is important for differentiating duplicate moves (i.e. 2 rooks on the same file).*
+
+## 3-fold repetition
+
+To implement this rule, we need to keep track of every position (without header) since the last capture or pawn move, so at most 100 * 32 = 320 bytes.
