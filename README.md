@@ -14,6 +14,7 @@ The board is encoded as 64 4-bits tiles (32 bytes), and 2 bytes of header info.
 | can en passant          | 1    |
 | en passant column       | 3    |
 | counter (50-moves rule) | 7    |
+
 *The counter needs to count up to 100 because it counts half-moves*
 
 ### Tiles
@@ -34,6 +35,7 @@ Each move can be encoded with 2 bytes.
 | is check            | 1    |
 | is mate             | 1    |
 | *empty*             | 1    |
+
 *The `from position index` field is important for differentiating duplicate moves (i.e. 2 rooks on the same file).*
 
 ## 3-fold repetition
