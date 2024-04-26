@@ -2,7 +2,7 @@ import turtle
 import turtle as t
 from config import board_origin, tile_size, piece_colors
 from utils import bits_from_file_end_first
-
+from time import sleep
 
 class Piece:
     pixel_size = tile_size // 17
@@ -29,7 +29,7 @@ class Piece:
         t.penup()
         t.color(piece_colors[0] if self.is_white else piece_colors[1])
 
-        for i, pixel in enumerate(bits_from_file_end_first(f"pieces/imgs/{self.__class__.__name__}.bin")):
+        for i, pixel in enumerate(bits_from_file_end_first(f"sprites/{self.__class__.__name__}.bin")):
             if i % 17 == 0:  # Place on the right line
                 self.go_to()
                 t.left(90)
