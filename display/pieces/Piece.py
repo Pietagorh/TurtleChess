@@ -1,7 +1,7 @@
 import turtle
 import turtle as t
 from config import board_origin, tile_size, piece_colors
-from create_sprite_from_bin import Sprite
+from Sprite import Sprite
 
 
 class Piece:
