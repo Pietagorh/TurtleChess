@@ -1,7 +1,7 @@
 import turtle
 from bitarray import bitarray
 from bitarray.util import ba2int
-from config import tile_size, board_origin, board_colors
+from config import TILE_SIZE, BOARD_ORIGIN, BOARD_COLORS
 from pieces.Bishop import Bishop
 from pieces.King import King
 from pieces.Knight import Knight
@@ -22,16 +22,15 @@ class Board:
         :param x: the x position of the tile to draw
         :param y: the y position of the tile to draw
         """
-
         turtle.penup()
-        turtle.goto(board_origin + x * tile_size, board_origin + y * tile_size)
+        turtle.goto(BOARD_ORIGIN + x * TILE_SIZE, BOARD_ORIGIN + y * TILE_SIZE)
         turtle.pendown()
 
-        turtle.color(board_colors[0] if (x + y) % 2 == 0 else board_colors[1])
+        turtle.color(BOARD_COLORS[0] if (x + y) % 2 == 0 else BOARD_COLORS[1])
 
         turtle.begin_fill()
         for _ in range(4):
-            turtle.forward(tile_size)
+            turtle.forward(TILE_SIZE)
             turtle.left(90)
         turtle.end_fill()
 
@@ -41,13 +40,13 @@ class Board:
         Draws all background tiles
         """
         turtle.penup()
-        turtle.setpos(board_origin, board_origin)
+        turtle.setpos(BOARD_ORIGIN, BOARD_ORIGIN)
         turtle.pendown()
 
         for row in range(8):
             for tile in range(8):
                 Board.draw_tile(row, tile)
-    
+
     def draw_pieces(self) -> None:
         """
         Draws all the pieces
@@ -62,7 +61,6 @@ class Board:
         """
         pieces = [Pawn, Rook, Knight, Bishop, Queen, King]
         for i in range(0, 64 * 4, 4):
-
             piece_type = ba2int(position[i + 1: i + 4])
             if piece_type != 0:
                 piece = pieces[piece_type - 1]

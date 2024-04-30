@@ -1,9 +1,9 @@
 # Board size
-tile_size = 68
+TILE_SIZE = 68
 
 # Colors
-board_colors = ["#26611a", "#7de062"]
-piece_colors = ["#ffffff", "#000000"]
+BOARD_COLORS = ["#26611a", "#7de062"]
+PIECE_COLORS = ["#ffffff", "#000000"]
 
 # Global vars
-board_origin = - tile_size * 4
+BOARD_ORIGIN = - TILE_SIZE * 4

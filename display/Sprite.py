@@ -1,6 +1,6 @@
+from os import path, remove
 from typing import Iterator
 from bitarray import bitarray
-from os import path, remove
 from PIL import Image
 
 
