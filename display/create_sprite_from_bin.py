@@ -1,7 +1,7 @@
 from typing import Iterator
-
 from bitarray import bitarray
 from os import path, remove
+from PIL import Image
 
 
 class Sprite:
@@ -11,6 +11,14 @@ class Sprite:
         with open(self.sprite_path, "rb") as f:
             self.unused_bits = int(f.read(1)[0])
             self.data = f.read()
+
+    @staticmethod
+    def convert_image(image_path: str) -> str:
+        image = Image.open(image_path).getdata()
+        data = ""
+        for pixel in image:
+            data += "1" if sum(pixel) >= 512 else "0"
+        return data
 
     @staticmethod
     def write_sprite(name: str, data: str) -> None:
@@ -39,5 +47,3 @@ class Sprite:
                     continue
 
                 yield bool(b & 2 ** (7 - i))
-
-Sprite.write_sprite("bishop", "0000000000000000000000000000000000000000001000000000000000101000000000000010001000000000000101010000000000001000100000000000011011000000000000010100000000000001101100000000000010001000000000001100011000000000110000011000000011000000011000001111111111111000000000000000000000000000000000000")
