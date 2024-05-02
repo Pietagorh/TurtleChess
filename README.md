@@ -38,6 +38,18 @@ Each move can be encoded with 2 bytes.
 
 *The `from position index` field is important for differentiating duplicate moves (i.e. 2 rooks on the same file).*
 
-## 3-fold repetition
+### 3-fold repetition
 
 To implement this rule, we need to keep track of every position (without header) since the last capture or pawn move, so at most 100 * 32 = 320 bytes.
+
+## Sprites
+
+Since we only use simple 1-color sprites we just need some 0's and 1's to represent our sprites (might change tho).
+Since the number of pixels in a sprite might not be a clean multiple of 8, we keep as a header the number of unused bits (up to 7, so we only need 3 bits) that get inserted right before the useful data, but use a full byte for convenience, tho we will probably
+
+| Attribute         | Bits  |
+|-------------------|-------|
+| # of filler bits  | 3     |
+| *empty (header)*  | 5     |
+| filler bits       | 7<=   |
+| pixel data        | undef |
