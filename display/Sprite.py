@@ -1,4 +1,4 @@
-from os import path, remove
+from os import path, mkdir, listdir, remove
 from typing import Iterator
 from bitarray import bitarray
 from PIL import Image
@@ -21,15 +21,24 @@ class Sprite:
         return data
 
     @staticmethod
-    def write_sprite(name: str, data: str) -> None:
-        sprite_path = f"sprites/{name}.bs"
+    def write_sprite(name: str, data: str, *, is_anim=False) -> None:
+        dir = "sprites/"
+
+        if is_anim:
+            dir += f"{name}"
+            if not path.exists(dir):
+                mkdir(dir)
+            
+            name = len(listdir(dir))
+
+        sprite_path = f"{dir}/{name}.bs"
 
         if path.exists(sprite_path):
             remove(sprite_path)
 
         with open(sprite_path, "xb") as f:
             unused_bits = 8 - len(data) + len(data) // 8 * 8
-            f.write(unused_bits.to_bytes() + bitarray("".join("0" for _ in range(unused_bits)) + "".join(reversed(list(data)))).tobytes())
+            f.write(unused_bits.to_bytes(1, byteorder="big") + bitarray("".join("0" for _ in range(unused_bits)) + "".join(reversed(list(data)))).tobytes())
 
     def __repr__(self) -> str:
         res = ""
